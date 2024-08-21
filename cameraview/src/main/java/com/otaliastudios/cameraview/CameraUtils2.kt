@@ -22,7 +22,7 @@ import java.util.Comparator
  */
 open class CameraUtils2 {
     companion object {
-        @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+        @RequiresApi(Build.VERSION_CODES.P)
         @JvmName("getCameraLensInfo")
         fun getCameraLensInfo(cameraManager: CameraManager, facing: Int): CameraInformation? {
 //            val cameraManager = mContext.getSystemService(Context.CAMERA_SERVICE) as? CameraManager
@@ -36,9 +36,20 @@ open class CameraUtils2 {
 
             val frontCameraList = arrayListOf<CameraInformation>()
             val backCameraList = arrayListOf<CameraInformation>()
-
+            var physicalCameraIds:Set<String> = setOf()
             cameraIdList.forEach { id ->
                 val characteristics = cameraManager.getCameraCharacteristics(id)
+                // Usually cameraId = 0 is logical camera, so we check that
+                val capabilities = characteristics.get(
+                    CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES
+                )
+                val isLogicalCamera = capabilities!!.contains(
+                    CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_LOGICAL_MULTI_CAMERA
+                )
+
+                if (isLogicalCamera) {
+                    physicalCameraIds = characteristics.physicalCameraIds
+                }
                 //前置
                 val front =
                     characteristics.get(CameraCharacteristics.LENS_FACING) == CameraCharacteristics.LENS_FACING_FRONT
@@ -67,7 +78,7 @@ open class CameraUtils2 {
                 )
                 if (front) {
                     frontCameraList.add(cameraInfo)
-                } else {
+                } else if (!isLogicalCamera){
                     backCameraList.add(cameraInfo)
                 }
             }
@@ -109,6 +120,9 @@ open class CameraUtils2 {
             if (facing == CameraCharacteristics.LENS_FACING_FRONT) {
                 return frontCameraList.last()
             } else {
+//                return backCameraList.find {
+//                    physicalCameraIds.last() == it.cameraId
+//                }
                 return backCameraList.last()
             }
         }

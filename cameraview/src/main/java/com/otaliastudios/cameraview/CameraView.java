@@ -697,6 +697,7 @@ public class CameraView extends FrameLayout implements LifecycleObserver {
             case ZOOM:
                 oldValue = mCameraEngine.getZoomValue();
                 newValue = source.computeValue(oldValue, 0, 1);
+                LOG.i("当前缩放：oldValue: " +oldValue+"   newValue:  "+newValue);
                 if (newValue != oldValue) {
                     mCameraEngine.setZoom(newValue, points, true);
                 }
