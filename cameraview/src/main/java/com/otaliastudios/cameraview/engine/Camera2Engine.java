@@ -386,7 +386,7 @@ public class Camera2Engine extends CameraBaseEngine implements
         LOG.i("collectCameraInfo", "Facing:", facing,
                 "Internal:", internalFacing,
                 "Cameras:", cameraIds.length);
-        CameraInformation cameraLensInfo = CameraUtils2.Companion.getCameraLensInfo(mManager, facing);
+        CameraInformation cameraLensInfo = CameraUtils2.Companion.getCameraLensInfo(mManager, internalFacing);
         if (cameraLensInfo != null) {
             LOG.i("拿到了广角摄像头"+cameraLensInfo.toString());
             mCameraId = cameraLensInfo.getCameraId();

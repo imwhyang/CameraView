@@ -24,7 +24,7 @@ open class CameraUtils2 {
     companion object {
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         @JvmName("getCameraLensInfo")
-        fun getCameraLensInfo(cameraManager: CameraManager, @NonNull  facing: Facing): CameraInformation? {
+        fun getCameraLensInfo(cameraManager: CameraManager, facing: Int): CameraInformation? {
 //            val cameraManager = mContext.getSystemService(Context.CAMERA_SERVICE) as? CameraManager
 //                ?: return null
             val cameraIdList = cameraManager.cameraIdList
@@ -106,7 +106,11 @@ open class CameraUtils2 {
 
 //        textView.text = stringBuilder
 //        return stringBuilder.toString()
-            return backCameraList.last()
+            if (facing == CameraCharacteristics.LENS_FACING_FRONT) {
+                return frontCameraList.last()
+            } else {
+                return backCameraList.last()
+            }
         }
     }
 }
