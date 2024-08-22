@@ -2,11 +2,13 @@ package com.otaliastudios.cameraview.engine;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.graphics.ImageFormat;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
+import android.hardware.camera2.CameraManager;
 import android.location.Location;
 import android.os.Build;
 import androidx.annotation.NonNull;
@@ -18,7 +20,9 @@ import android.view.SurfaceHolder;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.otaliastudios.cameraview.CameraException;
+import com.otaliastudios.cameraview.CameraInformation;
 import com.otaliastudios.cameraview.CameraOptions;
+import com.otaliastudios.cameraview.CameraUtils2;
 import com.otaliastudios.cameraview.controls.PictureFormat;
 import com.otaliastudios.cameraview.engine.mappers.Camera1Mapper;
 import com.otaliastudios.cameraview.engine.metering.Camera1MeteringTransform;
@@ -140,6 +144,17 @@ public class Camera1Engine extends CameraBaseEngine implements
                 "Internal:", internalFacing,
                 "Cameras:", Camera.getNumberOfCameras());
         Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CameraManager    mManager = (CameraManager) getCallback().getContext()
+                    .getSystemService(Context.CAMERA_SERVICE);
+            CameraInformation cameraLensInfo = CameraUtils2.Companion.getCameraLensInfo(mManager, internalFacing);
+            if (cameraLensInfo != null) {
+                LOG.i("拿到了广角摄像头"+cameraLensInfo.toString());
+                mCameraId = Integer.parseInt(cameraLensInfo.getCameraId());
+                return true;
+            }
+        }
+
         for (int i = 0, count = Camera.getNumberOfCameras(); i < count; i++) {
             Camera.getCameraInfo(i, cameraInfo);
             if (cameraInfo.facing == internalFacing) {

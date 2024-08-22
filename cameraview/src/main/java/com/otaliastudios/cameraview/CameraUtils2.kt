@@ -22,7 +22,7 @@ import java.util.Comparator
  */
 open class CameraUtils2 {
     companion object {
-        @RequiresApi(Build.VERSION_CODES.P)
+        @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         @JvmName("getCameraLensInfo")
         fun getCameraLensInfo(cameraManager: CameraManager, facing: Int): CameraInformation? {
 //            val cameraManager = mContext.getSystemService(Context.CAMERA_SERVICE) as? CameraManager

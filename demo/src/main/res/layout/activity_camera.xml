@@ -1,35 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
-    android:background="#FF444444"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FF444444">
 
-    <!-- Camera -->
     <com.otaliastudios.cameraview.CameraView
         android:id="@+id/camera"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="88dp"
         android:keepScreenOn="true"
-        app:cameraExperimental="true"
+        app:cameraAudio="off"
+        app:cameraAutoFocusResetDelay="3000"
         app:cameraEngine="camera2"
-        app:cameraPreview="glSurface"
-        app:cameraPlaySounds="true"
-        app:cameraGrid="off"
-        app:cameraFlash="auto"
-        app:cameraAudio="on"
+        app:cameraExperimental="true"
         app:cameraFacing="back"
-        app:cameraGestureTap="autoFocus"
+        app:cameraFlash="off"
         app:cameraGestureLongTap="none"
         app:cameraGesturePinch="zoom"
-        app:cameraGestureScrollHorizontal="filterControl1"
-        app:cameraGestureScrollVertical="exposureCorrection"
+        app:cameraGestureScrollHorizontal="none"
+        app:cameraGestureScrollVertical="none"
+        app:cameraGestureTap="autoFocus"
+        app:cameraGrid="off"
         app:cameraMode="picture"
-        app:cameraAutoFocusMarker="@string/cameraview_default_autofocus_marker">
+        app:cameraPlaySounds="false"
+        app:cameraPreview="texture"
+        app:cameraPreviewFrameRate="30"
+        app:cameraVideoBitRate="300000"
+        app:cameraVideoCodec="h264"
+        app:cameraVideoSizeMaxHeight="640"
+        app:cameraVideoSizeMaxWidth="480">
+        <!--    &lt;!&ndash; Camera &ndash;&gt;-->
+        <!--    <com.otaliastudios.cameraview.CameraView-->
+        <!--        android:id="@+id/camera"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_gravity="center"-->
+        <!--        android:layout_marginBottom="88dp"-->
+        <!--        android:keepScreenOn="true"-->
+        <!--        app:cameraExperimental="true"-->
+        <!--        app:cameraEngine="camera2"-->
+        <!--        app:cameraPreview="glSurface"-->
+        <!--        app:cameraPlaySounds="true"-->
+        <!--        app:cameraGrid="off"-->
+        <!--        app:cameraFlash="auto"-->
+        <!--        app:cameraAudio="on"-->
+        <!--        app:cameraFacing="back"-->
+        <!--        app:cameraGestureTap="autoFocus"-->
+        <!--        app:cameraGestureLongTap="none"-->
+        <!--        app:cameraGesturePinch="zoom"-->
+        <!--        app:cameraGestureScrollHorizontal="filterControl1"-->
+        <!--        app:cameraGestureScrollVertical="exposureCorrection"-->
+        <!--        app:cameraMode="picture"-->
+        <!--        app:cameraAutoFocusMarker="@string/cameraview_default_autofocus_marker">-->
 
         <!-- Watermark -->
         <ImageView
@@ -47,9 +72,9 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_gravity="bottom|start"
         android:layout_marginBottom="96dp"
-        android:layout_gravity="bottom|start">
+        android:orientation="vertical">
 
         <ImageButton
             android:id="@+id/changeFilter"
@@ -75,9 +100,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:padding="16dp"
-        android:orientation="horizontal"
         android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:padding="16dp"
         android:weightSum="4">
 
         <ImageButton
@@ -108,20 +133,22 @@
             android:id="@+id/capturePictureSnapshot"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:orientation="vertical"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:gravity="center" >
+            android:gravity="center"
+            android:orientation="vertical">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_photo"/>
+                app:srcCompat="@drawable/ic_photo" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="SNAP"
                 android:textColor="@android:color/white"
-                android:textStyle="bold"
                 android:textSize="10sp"
-                android:text="SNAP"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <Space
@@ -146,38 +173,41 @@
             android:id="@+id/captureVideoSnapshot"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:orientation="vertical"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:gravity="center" >
+            android:gravity="center"
+            android:orientation="vertical">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_video"/>
+                app:srcCompat="@drawable/ic_video" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="SNAP"
                 android:textColor="@android:color/white"
-                android:textStyle="bold"
                 android:textSize="10sp"
-                android:text="SNAP"/>
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
     <!-- Edit -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@android:color/white"
-        app:layout_behavior="@string/bottom_sheet_behavior"
+        android:elevation="4dp"
         app:behavior_hideable="true"
         app:behavior_peekHeight="300dp"
         app:behavior_skipCollapsed="false"
-        android:elevation="4dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:layout_behavior="@string/bottom_sheet_behavior">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
     </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
